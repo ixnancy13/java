@@ -1,0 +1,45 @@
+️------------------------ Student Class--------------------------
+public class Student {
+    private String name;
+    private double marks;
+
+    public Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    public String getName() { return name; }
+    public double getMarks() { return marks; }
+
+    @Override
+    public String toString() {
+        return name + " : " + marks;
+    }
+}
+️
+------------------Main Program Using Streams--------------------------------
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class StudentFilterSort {
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+            new Student("Alice", 82),
+            new Student("Bob", 68),
+            new Student("Charlie", 90),
+            new Student("David", 74),
+            new Student("Eva", 88)
+        );
+
+        // Filter students with marks > 75, sort by marks ascending, and get names
+        List<String> filteredSortedNames = students.stream()
+                .filter(s -> s.getMarks() > 75)             // Filter
+                .sorted(Comparator.comparingDouble(Student::getMarks)) // Sort by marks
+                .map(Student::getName)                      // Map to names
+                .collect(Collectors.toList());
+
+        // Display the names
+        System.out.println("Students scoring above 75% sorted by marks:");
+        filteredSortedNames.forEach(System.out::println);
+    }
+}
